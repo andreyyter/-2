@@ -1,0 +1,74 @@
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Дата: ");
+        String datta = scan.nextLine();
+
+        String nomera = "[0-9]{2,}";
+        String format = "[0-9]{2}+/+[0-9]{2}+/+[0-9]{4}";
+
+        Pattern onenom = Pattern.compile(nomera);
+        int day = 13;
+        Matcher twonom = onenom.matcher(datta);
+        Pattern form = Pattern.compile(format);
+        int month = 13;
+        Matcher forma = form.matcher(datta);
+        int year = 13;
+
+        if (forma.matches()) {
+
+            int i = 1;
+            while (twonom.find()) {
+                if (i == 1) {
+                    day = Integer.parseInt(datta.substring(twonom.start(), twonom.end()));
+
+                }
+                if (i == 2) {
+                    month =Integer.parseInt( datta.substring(twonom.start(), twonom.end()));
+
+                }
+
+                if (i == 3) {
+                    year = Integer.parseInt(datta.substring(twonom.start(), twonom.end()));
+
+                }
+                if (i == 4) {
+                    System.out.println("Выделенное выражение не является датой");
+                    System.exit(0);
+                }
+                i = i + 1;
+
+            }
+            if ((day < 32 && day > 0)&&(month>0 && month<13)&&(year>1899 && year<10000)){
+                if (month==4 | month==6 | month==9 | month==11){
+                    if (day==31){
+                        System.out.println("Выделенное выражение не является датой");
+                        System.exit(0);
+                    }
+                }
+                if (month==2){
+                    if (day==30|day==31){
+                        System.out.println("Выделенное выражение не является датой");
+                        System.exit(0);
+                    }
+                }
+                System.out.println("Введенное выражение является датой");
+            }
+            else{
+                System.out.println("Выделенное выражение не является датой");
+            }
+
+
+        }
+        else {
+            System.out.println("Введенное выражение не соответствует заданному формату даты dd/mm/yyyy");
+            System.exit(0);
+        }
+
+    }
+}
